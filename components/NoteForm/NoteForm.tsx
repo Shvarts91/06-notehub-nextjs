@@ -20,7 +20,7 @@ const OrderSchema = Yup.object().shape({
 const initialValues: CreateNoteType = {
   title: "",
   content: "",
-  tag: "",
+  tag: "Todo",
 };
 
 interface NoteFormProps {
@@ -37,7 +37,7 @@ const NoteForm = ({ onClose }: NoteFormProps) => {
       queryClient.invalidateQueries({ queryKey: ["noteList"] });
     },
     onError: (error) => {
-      console.error("Помилка створення нотатки:", error);
+      console.error("Error creating note:", error);
     },
   });
 
@@ -96,7 +96,11 @@ const NoteForm = ({ onClose }: NoteFormProps) => {
           <button onClick={onClose} type="button" className={css.cancelButton}>
             Cancel
           </button>
-          <button type="submit" className={css.submitButton} disabled={false}>
+          <button
+            type="submit"
+            className={css.submitButton}
+            disabled={mutation.isPending}
+          >
             Create note
           </button>
         </fieldset>

@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import css from "./NoteList.module.css";
-import { deleteIdNote } from "@/lib/api";
+import { deleteNoteById } from "@/lib/api";
 import { Note } from "@/types/note";
 import Link from "next/link";
 
@@ -12,13 +12,13 @@ interface NoteListProps {
 const NoteList = ({ list }: NoteListProps) => {
   const queryClient = useQueryClient();
   const mutation = useMutation({
-    mutationFn: deleteIdNote,
+    mutationFn: deleteNoteById,
     onSuccess: (data) => {
       console.log("Notate delete:", data);
       queryClient.invalidateQueries({ queryKey: ["noteList"] });
     },
     onError: (error) => {
-      console.error("Ошибка:", error);
+      console.error("Error receiving note:", error);
     },
   });
 
@@ -36,7 +36,13 @@ const NoteList = ({ list }: NoteListProps) => {
               <span className={css.tag}>{note.tag}</span>
               <Link href={`/notes/${note.id}`}> View details</Link>
               <button
-                onClick={() => deleteNoteClickButton(note.id!)}
+                onClick={() => {
+                  if (note.id) {
+                    deleteNoteClickButton(note.id);
+                  } else {
+                    console.warn("Note id is undefined!");
+                  }
+                }}
                 className={css.button}
               >
                 Delete

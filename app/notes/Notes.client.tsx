@@ -28,8 +28,6 @@ function Notes({
     queryFn: () => fetchNotes(currentPage, debouncedSearchQuery),
     placeholderData: keepPreviousData,
     refetchOnMount: false,
-    initialData:
-      debouncedSearchQuery === "" && currentPage === 1 ? undefined : undefined,
   });
 
   const onPageChange = (page: number) => {
