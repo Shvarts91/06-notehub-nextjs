@@ -6,11 +6,11 @@ import {
 import Notes from "./Notes.client";
 import { fetchNotes } from "@/lib/api";
 
-export default async function NotesPage({
-  searchParams,
-}: {
-  searchParams: { search?: string; page?: string };
-}) {
+interface PageProps {
+  searchParams: Promise<{ search?: string; page?: string }>;
+}
+
+export default async function NotesPage({ searchParams }: PageProps) {
   const queryClient = new QueryClient();
 
   const params = await searchParams;
