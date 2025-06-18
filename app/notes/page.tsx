@@ -8,7 +8,7 @@ import { fetchNotes } from "@/lib/api";
 import { NotesResponse } from "@/types/note";
 
 interface PageProps {
-  searchParams: { search?: string; page?: string };
+  searchParams: Promise<{ search?: string; page?: string }>;
 }
 
 export default async function NotesPage({ searchParams }: PageProps) {
