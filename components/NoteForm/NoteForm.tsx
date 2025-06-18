@@ -101,7 +101,7 @@ const NoteForm = ({ onClose }: NoteFormProps) => {
             className={css.submitButton}
             disabled={mutation.isPending}
           >
-            Create note
+            {mutation.isPending ? "Creating..." : "Create note"}
           </button>
         </fieldset>
       </Form>

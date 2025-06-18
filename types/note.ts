@@ -13,3 +13,8 @@ export interface CreateNoteType {
   content?: string;
   tag: "" | NoteTag;
 }
+
+export interface NotesResponse {
+  notes: Note[];
+  totalPages: number;
+}

@@ -12,11 +12,12 @@ interface NoteDetailsProps {
 
 const NoteDetails = async ({ params }: NoteDetailsProps) => {
   const { id } = await params;
+  const idNumber = Number(id);
   const queryClient = new QueryClient();
 
   await queryClient.prefetchQuery({
     queryKey: ["note", id],
-    queryFn: () => getSingleNote(id),
+    queryFn: () => getSingleNote(idNumber),
   });
 
   return (

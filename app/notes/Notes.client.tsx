@@ -11,14 +11,19 @@ import ErrorMessage from "@/components/ErrorMessage/ErrorMessage";
 import Loader from "@/components/Loader/Loader";
 import NoteList from "@/components/NoteList/NoteList";
 import { fetchNotes } from "@/lib/api";
+import { NotesResponse } from "@/types/note";
+
+interface NotesProps {
+  initialSearch?: string;
+  initialPage?: number;
+  initialData?: NotesResponse;
+}
 
 function Notes({
   initialSearch = "",
   initialPage = 1,
-}: {
-  initialSearch?: string;
-  initialPage?: number;
-}) {
+  initialData,
+}: NotesProps) {
   const [searchQuery, setSearchQuery] = useState<string>(initialSearch);
   const [debouncedSearchQuery] = useDebounce(searchQuery, 300);
   const [currentPage, setCurrentPage] = useState<number>(initialPage);
@@ -28,6 +33,7 @@ function Notes({
     queryFn: () => fetchNotes(currentPage, debouncedSearchQuery),
     placeholderData: keepPreviousData,
     refetchOnMount: false,
+    initialData,
   });
 
   const onPageChange = (page: number) => {

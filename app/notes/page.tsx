@@ -5,6 +5,7 @@ import {
 } from "@tanstack/react-query";
 import Notes from "./Notes.client";
 import { fetchNotes } from "@/lib/api";
+import { NotesResponse } from "@/types/note";
 
 interface PageProps {
   searchParams: { search?: string; page?: string };
@@ -23,9 +24,19 @@ export default async function NotesPage({ searchParams }: PageProps) {
     queryFn: () => fetchNotes(page, search),
   });
 
+  const initialData = queryClient.getQueryData<NotesResponse>([
+    "noteList",
+    search,
+    page,
+  ]);
+
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <Notes initialSearch={search} initialPage={page} />
+      <Notes
+        initialData={initialData}
+        initialSearch={search}
+        initialPage={page}
+      />
     </HydrationBoundary>
   );
 }
