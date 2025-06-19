@@ -10,29 +10,21 @@ import { useDebounce } from "use-debounce";
 import ErrorMessage from "@/components/ErrorMessage/ErrorMessage";
 import Loader from "@/components/Loader/Loader";
 import NoteList from "@/components/NoteList/NoteList";
-import { fetchNotes } from "@/lib/api";
-import { NotesResponse } from "@/types/note";
+import { fetchNotes, NotesResponse } from "@/lib/api";
 
 interface NotesProps {
-  initialSearch?: string;
-  initialPage?: number;
-  initialData?: NotesResponse;
+  initialData: NotesResponse;
 }
 
-function Notes({
-  initialSearch = "",
-  initialPage = 1,
-  initialData,
-}: NotesProps) {
-  const [searchQuery, setSearchQuery] = useState<string>(initialSearch);
+function Notes({ initialData }: NotesProps) {
+  const [searchQuery, setSearchQuery] = useState<string>("");
   const [debouncedSearchQuery] = useDebounce(searchQuery, 300);
-  const [currentPage, setCurrentPage] = useState<number>(initialPage);
+  const [currentPage, setCurrentPage] = useState<number>(1);
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
   const { data, isError, isPending } = useQuery({
     queryKey: ["noteList", debouncedSearchQuery, currentPage],
     queryFn: () => fetchNotes(currentPage, debouncedSearchQuery),
     placeholderData: keepPreviousData,
-    refetchOnMount: false,
     initialData,
   });
 

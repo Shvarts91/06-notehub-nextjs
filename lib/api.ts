@@ -1,5 +1,10 @@
 import axios, { type AxiosResponse } from "axios";
-import type { CreateNoteType, Note, NotesResponse } from "../types/note";
+import type { CreateNoteType, Note } from "../types/note";
+
+export interface NotesResponse {
+  notes: Note[];
+  totalPages: number;
+}
 
 axios.defaults.baseURL = "https://notehub-public.goit.study/api";
 

@@ -36,13 +36,7 @@ const NoteList = ({ list }: NoteListProps) => {
               <span className={css.tag}>{note.tag}</span>
               <Link href={`/notes/${note.id}`}> View details</Link>
               <button
-                onClick={() => {
-                  if (note.id) {
-                    deleteNoteClickButton(note.id);
-                  } else {
-                    console.warn("Note id is undefined!");
-                  }
-                }}
+                onClick={() => deleteNoteClickButton(note.id)}
                 className={css.button}
               >
                 Delete
